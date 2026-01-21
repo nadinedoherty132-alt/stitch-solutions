@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crochet Buddy 🧶</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff7fc;
+            text-align: center;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #b86adf;
+        }
+
+        #chat-box {
+            width: 60%;
+            margin: auto;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+        }
+
+        .message {
+            margin: 10px 0;
+            text-align: left;
+        }
+
+        .user {
+            font-weight: bold;
+            color: #444;
+        }
+
+        .bot {
+            color: #b86adf;
+        }
+
+        #input-area {
+            margin-top: 20px;
+        }
+
+        input {
+            width: 60%;
+            padding: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #b86adf;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #9c54c8;
+        }
+
+        .examples {
+            margin-top: 20px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🧶 Crochet Buddy</h1>
+<p>Your friendly AI crochet helper</p>
+
+<div id="chat-box"></div>
+
+<div id="input-area">
+    <input id="user-input" placeholder="Ask me about crochet..." />
+    <button onclick="sendMessage()">Send</button>
+</div>
+
+<div class="examples">
+    <p><strong>Try asking:</strong></p>
+    <ul style="list-style: none; padding: 0;">
+        <li>How do I start a granny square?</li>
+        <li>Why is my crochet curling?</li>
+        <li>What yarn is best for beginners?</li>
+    </ul>
+</div>
+
+<script>
+    async function sendMessage() {
+        const input = document.getElementById("user-input");
+        const message = input.value;
+        if (!message) return;
+
+        const chatBox = document.getElementById("chat-box");
+
+        chatBox.innerHTML += `<div class="message user">You: ${message}</div>`;
+        input.value = "";
+
+        const response = await fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: message })
+        });
+
+        const data = await response.json();
+        chatBox.innerHTML += `<div class="message bot">Buddy: ${data.reply}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+</script>
+
+</body>
+</html>
