@@ -2,116 +2,153 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Crochet Buddy 🧶</title>
-
-    <style>
+    <title>Stitch Solutions 🧶</title>
+    < style >
         body {
             font-family: Arial, sans-serif;
-            background-color: #fff7fc;
-            text-align: center;
-            padding: 40px;
+            background: linear-gradient(135deg, #fce4ec, #e3f2fd);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         h1 {
-            color: #b86adf;
+            text-align: center;
+            color: #6a1b9a;
         }
 
-        #chat-box {
-            width: 60%;
-            margin: auto;
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            height: 400px;
-            overflow-y: auto;
+        h2 {
+            color: #ad1457;
+            margin-top: 30px;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        .chat-box {
             border: 1px solid #ddd;
-        }
-
-        .message {
-            margin: 10px 0;
-            text-align: left;
+            padding: 15px;
+            height: 250px;
+            overflow-y: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
         }
 
         .user {
-            font-weight: bold;
-            color: #444;
+            color: #0d47a1;
+            margin-bottom: 8px;
         }
 
         .bot {
-            color: #b86adf;
-        }
-
-        #input-area {
-            margin-top: 20px;
+            color: #4a148c;
+            margin-bottom: 12px;
         }
 
         input {
-            width: 60%;
+            width: 80%;
             padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
         }
 
         button {
-            padding: 10px 20px;
-            background-color: #b86adf;
-            color: white;
+            padding: 10px 15px;
             border: none;
+            background-color: #8e24aa;
+            color: white;
+            border-radius: 6px;
             cursor: pointer;
-            border-radius: 5px;
         }
 
         button:hover {
-            background-color: #9c54c8;
+            background-color: #6a1b9a;
         }
 
-        .examples {
-            margin-top: 20px;
+        .about {
+            background: #f8bbd0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9em;
             color: #555;
         }
     </style>
 </head>
 <body>
 
-<h1>🧶 Crochet Buddy</h1>
-<p>Your friendly AI crochet helper</p>
+<div class="container">
+    <h1>🧶 Stitch Solutions</h1>
 
-<div id="chat-box"></div>
+    <p><strong>Your friendly AI crochet buddy</strong> — here to motivate, inspire, and support your creativity.</p>
 
-<div id="input-area">
-    <input id="user-input" placeholder="Ask me about crochet..." />
+    <!-- ABOUT ME SECTION -->
+    <div class="about">
+        <h2>About Me 💛</h2>
+        <p>
+            Hi! I’m Nadine, the creator of <strong>Stitch Solutions</strong>.
+        </p>
+        <p>
+            I built this project to challenge the idea that AI “kills creativity,” while also sharing the joy one of my favourite hobbies can bring!
+            Instead, Stitch Solutions is designed to <strong>support, encourage, and spark creativity</strong>
+            — especially for beginners who might feel overwhelmed or discouraged.
+        </p>
+        <p>
+            Crochet should feel cozy, joyful, and accessible to everyone.
+            This AI buddy doesn’t replace creativity — it helps you believe in yours 🧶✨
+        </p>
+    </div>
+
+    <!-- CHAT SECTION -->
+    <h2>Chat with your Crochet Buddy</h2>
+
+    <div class="chat-box" id="chat"></div>
+
+    <input type="text" id="message" placeholder="Ask me about crochet..." />
     <button onclick="sendMessage()">Send</button>
-</div>
 
-<div class="examples">
-    <p><strong>Try asking:</strong></p>
-    <ul style="list-style: none; padding: 0;">
-        <li>How do I start a granny square?</li>
-        <li>Why is my crochet curling?</li>
-        <li>What yarn is best for beginners?</li>
-    </ul>
+    <footer>
+        Built with 💛 for creativity · Stitch Solutions
+    </footer>
 </div>
 
 <script>
     async function sendMessage() {
-        const input = document.getElementById("user-input");
-        const message = input.value;
-        if (!message) return;
+        const input = document.getElementById("message");
+        const chat = document.getElementById("chat");
+        const userMessage = input.value;
 
-        const chatBox = document.getElementById("chat-box");
+        if (!userMessage) return;
 
-        chatBox.innerHTML += `<div class="message user">You: ${message}</div>`;
+        chat.innerHTML += `<div class="user"><strong>You:</strong> ${userMessage}</div>`;
         input.value = "";
 
         const response = await fetch("/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: message })
+            body: JSON.stringify({ message: userMessage })
         });
 
         const data = await response.json();
-        chatBox.innerHTML += `<div class="message bot">Buddy: ${data.reply}</div>`;
-        chatBox.scrollTop = chatBox.scrollHeight;
+        chat.innerHTML += `<div class="bot"><strong>Buddy:</strong> ${data.reply}</div>`;
+        chat.scrollTop = chat.scrollHeight;
     }
 </script>
 
 </body>
 </html>
+
+
